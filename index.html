@@ -1,0 +1,269 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The Music of the War &mdash; Promise &amp; Practice</title>
+<style>
+:root{--rust:#b1442f;--ink:#1a1a1a;--body:#33302b;--mut:#7a7166;--hair:#e3ddd4;--page:#fbf8f2;--card:#fff}
+*{box-sizing:border-box}html,body{margin:0}
+body{background:var(--page);color:var(--body);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased;line-height:1.58}
+.wrap{max-width:860px;margin:0 auto;padding:0 22px}
+a{color:var(--rust)}
+.hero{padding:60px 0 20px;text-align:center}
+.kick{font-size:12px;letter-spacing:.34em;text-transform:uppercase;color:var(--rust);font-weight:700}
+.hrule{width:52px;height:3px;background:var(--rust);margin:18px auto 22px}
+h1{font-family:Georgia,'Times New Roman',serif;font-weight:400;font-size:clamp(40px,7vw,68px);line-height:1.02;letter-spacing:-.015em;color:var(--ink);margin:0}
+.lede{max-width:60ch;margin:18px auto 0;font-size:clamp(15px,1.6vw,18px)}
+.intro{border-top:1px solid var(--hair);border-bottom:1px solid var(--hair);padding:24px 0;margin:30px 0 8px;font-size:16px}
+.intro p{margin:0 0 12px}.intro p:last-child{margin:0}
+.seclbl{font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--rust);font-weight:700;margin:38px 0 14px;padding-bottom:8px;border-bottom:1px solid var(--hair)}
+.card{display:flex;gap:20px;background:var(--card);border:1px solid var(--hair);border-radius:14px;padding:20px;margin:16px 0;box-shadow:0 6px 22px rgba(0,0,0,.04)}
+.card.hard{border-left:4px solid var(--rust)}
+.card .fig{flex:0 0 168px}
+.card .fig img{width:168px;height:214px;object-fit:cover;border-radius:8px;background:#eee;box-shadow:0 4px 14px rgba(0,0,0,.18);cursor:zoom-in;display:block}
+.card .body{flex:1;min-width:0}
+.cnote{display:inline-block;font-size:11px;letter-spacing:.06em;text-transform:uppercase;font-weight:700;color:var(--rust);border:1px solid rgba(177,68,47,.35);border-radius:20px;padding:3px 10px;margin-bottom:10px}
+.card h3{font-family:Georgia,serif;font-weight:400;font-size:26px;color:var(--ink);margin:0 0 3px}
+.card .sub{font-size:12.5px;letter-spacing:.04em;text-transform:uppercase;color:var(--mut);font-weight:700;margin-bottom:12px}
+.card p{margin:0 0 14px;font-size:15.5px}
+/* custom player */
+.player{display:flex;align-items:center;gap:13px;margin:4px 0 12px}
+.pp{flex:0 0 auto;width:46px;height:46px;border-radius:50%;border:none;background:var(--rust);color:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;padding:0;box-shadow:0 3px 10px rgba(177,68,47,.35);transition:background .12s,transform .08s}
+.pp:hover{background:#9a3728}
+.pp:active{transform:scale(.94)}
+.pp.loading{opacity:.6;cursor:progress}
+.pp svg{margin-left:1px}
+.pp .pause-ic{margin-left:0}
+.ptrack{position:relative;flex:1;height:8px;border-radius:6px;background:var(--hair);cursor:pointer;touch-action:none}
+.ptrack:focus-visible{outline:2px solid var(--rust);outline-offset:3px}
+.pbuf{position:absolute;left:0;top:0;height:100%;width:0;border-radius:6px;background:rgba(177,68,47,.18)}
+.pfill{position:absolute;left:0;top:0;height:100%;width:0;border-radius:6px;background:var(--rust)}
+.pknob{position:absolute;top:50%;left:0;width:15px;height:15px;border-radius:50%;background:#fff;border:2px solid var(--rust);transform:translate(-50%,-50%);box-shadow:0 1px 4px rgba(0,0,0,.25);opacity:0;transition:opacity .12s}
+.ptrack:hover .pknob,.ptrack:focus-visible .pknob,.player.playing .pknob{opacity:1}
+.ptime{flex:0 0 auto;font-variant-numeric:tabular-nums;font-size:12.5px;color:var(--mut);white-space:nowrap}
+.ptime .sep{margin:0 4px;opacity:.6}
+.cred{font-size:11.5px;color:var(--mut);line-height:1.5;border-top:1px solid var(--hair);padding-top:9px}
+.gal{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:6px 0 10px}
+.gi{margin:0}
+.gi img{width:100%;height:150px;object-fit:cover;border-radius:8px;background:#eee;cursor:zoom-in;box-shadow:0 3px 10px rgba(0,0,0,.12)}
+.gi figcaption{font-size:11px;color:var(--mut);line-height:1.45;margin-top:6px}
+.foot{margin:40px 0 60px;padding-top:20px;border-top:1px solid var(--hair);text-align:center;font-size:12px;color:var(--mut);line-height:1.7}
+.foot b{color:var(--rust);letter-spacing:.06em;text-transform:uppercase;font-size:11px}
+.back{display:inline-block;margin:22px 0 0;font-size:14px;font-weight:700;text-decoration:none}
+.cta{display:block;margin:26px 0 0;padding:18px 22px;background:var(--rust);color:#fff;text-decoration:none;border-radius:12px;font-weight:700;font-size:16px;text-align:center;box-shadow:0 6px 20px rgba(177,68,47,.28)}
+.cta:hover{background:#9a3728}
+/* lightbox */
+#lb{position:fixed;inset:0;background:rgba(20,17,15,.93);display:none;align-items:center;justify-content:center;z-index:50;padding:28px;cursor:zoom-out}
+#lb.on{display:flex}
+#lb img{max-width:94vw;max-height:88vh;border-radius:6px;box-shadow:0 10px 50px rgba(0,0,0,.6)}
+#lb .x{position:absolute;top:16px;right:22px;color:#fff;font-size:34px;line-height:1;cursor:pointer;font-family:Georgia,serif}
+@media(max-width:640px){
+ .card{flex-direction:column;gap:14px}
+ .card .fig{flex:none}
+ .card .fig img{width:132px;height:168px;margin:0 auto}
+ .gal{grid-template-columns:repeat(2,1fr)}
+}
+@media(prefers-reduced-motion:no-preference){.card{transition:box-shadow .15s}}
+</style></head><body>
+<div class="wrap">
+ <div class="hero">
+  <div class="kick">Promise &amp; Practice · Unit Two</div>
+  <div class="hrule"></div>
+  <h1>The Music of the War</h1>
+  <div class="lede">The Civil War was the most-sung war in American history. Men marched to these tunes, mourned to them, and were recruited by them &mdash; and some of them carry histories as ugly as the war itself. Press play and listen to what 1861 actually sounded like.</div>
+ </div>
+
+ <div class="intro">
+  <p>Before radio, before recordings, a song <em>was</em> mass media. A good tune could cross a battle line in a week. Both armies stole each other&rsquo;s melodies and wrote new words; a Northern rallying cry and a Southern anthem could share the same notes. Music told soldiers when to wake, when to march, and what they were supposedly dying for.</p>
+  <p>These are historical recordings &mdash; most made on wax and shellac between 1902 and 1916, within living memory of the war. They crackle. That crackle is part of the evidence. Listen for what each song is really <em>asking</em> its singers to believe.</p>
+ </div>
+
+ <div class="seclbl">Songs of the Union</div>
+ <article class="card" id="t0">
+ <div class="fig"><img src="assets/image-01.jpg" alt="The Battle Cry of Freedom" data-full="cover_battlecry" loading="lazy"></div>
+ <div class="body">
+  
+  <h3>The Battle Cry of Freedom</h3>
+  <div class="sub">George F. Root · 1862 · Union</div>
+  <p>Root wrote it in 1862, right after Lincoln called for 300,000 more volunteers, and it became the North&rsquo;s great rallying song &mdash; soldiers roared <em>&ldquo;The Union forever! Hurrah, boys, hurrah!&rdquo;</em> on the march and around the fire. The Confederacy liked the melody so much it wrote its own Southern words to it. A song could be a recruiting poster set to music.</p>
+  <div class="player">
+   <button class="pp" type="button" aria-label="Play The Battle Cry of Freedom" aria-pressed="false"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M8 5.5v13l11-6.5z" fill="currentColor"/></svg></button>
+   <div class="ptrack" role="slider" tabindex="0" aria-label="Seek" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="pbuf"></div><div class="pfill"></div><div class="pknob"></div></div>
+   <div class="ptime"><span class="cur">0:00</span><span class="sep">/</span><span class="dur">0:00</span></div>
+   <audio preload="none" src="assets/audio-01.mp3"></audio>
+  </div>
+  <div class="cred">&ldquo;The Battle Cry of Freedom&rdquo; &mdash; acoustic recording, public domain (before 1925). Cover: Root &amp; Cady, Chicago, 1862, public domain.</div>
+ </div>
+</article>
+<article class="card" id="t1">
+ <div class="fig"><img src="assets/image-02.jpg" alt="John Brown&rsquo;s Body" data-full="cover_johnbrown" loading="lazy"></div>
+ <div class="body">
+  
+  <h3>John Brown&rsquo;s Body</h3>
+  <div class="sub">Union marching song · recorded 1902</div>
+  <p>In 1859 the abolitionist John Brown was hanged for his raid on Harpers Ferry. Within two years Union soldiers were marching to <em>&ldquo;John Brown&rsquo;s body lies a-mouldering in the grave &hellip; but his soul goes marching on&rdquo;</em> &mdash; part tribute, part grim camp humor. The tune was borrowed from an old Methodist hymn; the words turned a man the government had executed into a Union saint. Watch what a song can do: it made a hanged radical into a hero the army sang about.</p>
+  <div class="player">
+   <button class="pp" type="button" aria-label="Play John Brown&rsquo;s Body" aria-pressed="false"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M8 5.5v13l11-6.5z" fill="currentColor"/></svg></button>
+   <div class="ptrack" role="slider" tabindex="0" aria-label="Seek" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="pbuf"></div><div class="pfill"></div><div class="pknob"></div></div>
+   <div class="ptime"><span class="cur">0:00</span><span class="sep">/</span><span class="dur">0:00</span></div>
+   <audio preload="none" src="assets/audio-02.mp3"></audio>
+  </div>
+  <div class="cred">&ldquo;John Brown&rsquo;s Body&rdquo; &mdash; recording, 1902, public domain. Cover: Root &amp; Cady, Chicago, c.&nbsp;1861, public domain.</div>
+ </div>
+</article>
+<article class="card" id="t2">
+ <div class="fig"><img src="assets/image-03.jpg" alt="The Battle Hymn of the Republic" data-full="drummerboys_paint" loading="lazy"></div>
+ <div class="body">
+  
+  <h3>The Battle Hymn of the Republic</h3>
+  <div class="sub">Julia Ward Howe · 1862 · same tune, new words</div>
+  <p>Julia Ward Howe heard soldiers singing &ldquo;John Brown&rsquo;s Body&rdquo; and decided the melody deserved grander words. In 1862 she published the <em>Battle Hymn</em> &mdash; the very same tune you just heard, but now the war is God&rsquo;s judgment, <em>&ldquo;trampling out the vintage where the grapes of wrath are stored.&rdquo;</em> One melody, two songs: one about a dead man, one about holy war. Play it right after John Brown and you can hear how a nation rewrote what it was fighting for. This recording dates from about 1908.</p>
+  <div class="player">
+   <button class="pp" type="button" aria-label="Play The Battle Hymn of the Republic" aria-pressed="false"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M8 5.5v13l11-6.5z" fill="currentColor"/></svg></button>
+   <div class="ptrack" role="slider" tabindex="0" aria-label="Seek" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="pbuf"></div><div class="pfill"></div><div class="pknob"></div></div>
+   <div class="ptime"><span class="cur">0:00</span><span class="sep">/</span><span class="dur">0:00</span></div>
+   <audio preload="none" src="assets/audio-03.mp3"></audio>
+  </div>
+  <div class="cred">&ldquo;The Battle Hymn of the Republic&rdquo; &mdash; Frank C. Stanley &amp; Elise Stevenson, c.&nbsp;1908, public domain (Wikimedia Commons). Illustration: drummer boys, 19th c., public domain.</div>
+ </div>
+</article>
+<article class="card" id="t3">
+ <div class="fig"><img src="assets/image-04.jpg" alt="We&rsquo;ll Fight for Uncle Sam" data-full="cover_beadle" loading="lazy"></div>
+ <div class="body">
+  
+  <h3>We&rsquo;ll Fight for Uncle Sam</h3>
+  <div class="sub">Union enlistment song</div>
+  <p>A Union recruiting song set to a rollicking Irish tune. Cheap songs like this &mdash; printed in pocket-sized &ldquo;songsters&rdquo; such as <em>Beadle&rsquo;s Dime Song Book</em> and sold for pennies &mdash; did the quiet everyday work of the war: they made signing up sound like an adventure rather than a risk.</p>
+  <div class="player">
+   <button class="pp" type="button" aria-label="Play We&rsquo;ll Fight for Uncle Sam" aria-pressed="false"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M8 5.5v13l11-6.5z" fill="currentColor"/></svg></button>
+   <div class="ptrack" role="slider" tabindex="0" aria-label="Seek" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="pbuf"></div><div class="pfill"></div><div class="pknob"></div></div>
+   <div class="ptime"><span class="cur">0:00</span><span class="sep">/</span><span class="dur">0:00</span></div>
+   <audio preload="none" src="assets/audio-04.mp3"></audio>
+  </div>
+  <div class="cred">&ldquo;We&rsquo;ll Fight for Uncle Sam&rdquo; &mdash; historical recording, public domain. Cover: <em>Beadle&rsquo;s Dime Song Book</em>, public domain.</div>
+ </div>
+</article>
+<article class="card" id="t4">
+ <div class="fig"><img src="assets/image-05.jpg" alt="The Red, White and Blue" data-full="band_brass" loading="lazy"></div>
+ <div class="body">
+  
+  <h3>The Red, White and Blue</h3>
+  <div class="sub">&ldquo;Columbia, the Gem of the Ocean&rdquo;</div>
+  <p>Older than the war but sung everywhere during it &mdash; at recruiting rallies, in parlors, around campfires. Patriotism, then as now, traveled fastest on a tune everybody already knew by heart.</p>
+  <div class="player">
+   <button class="pp" type="button" aria-label="Play The Red, White and Blue" aria-pressed="false"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M8 5.5v13l11-6.5z" fill="currentColor"/></svg></button>
+   <div class="ptrack" role="slider" tabindex="0" aria-label="Seek" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="pbuf"></div><div class="pfill"></div><div class="pknob"></div></div>
+   <div class="ptime"><span class="cur">0:00</span><span class="sep">/</span><span class="dur">0:00</span></div>
+   <audio preload="none" src="assets/audio-05.mp3"></audio>
+  </div>
+  <div class="cred">&ldquo;The Red, White and Blue&rdquo; (&ldquo;Columbia, the Gem of the Ocean&rdquo;) &mdash; historical recording, public domain. Photograph: regimental brass band, c.&nbsp;1861&ndash;65, public domain.</div>
+ </div>
+</article>
+
+ <div class="seclbl">The Song the South Claimed</div>
+ <article class="card hard" id="t5">
+ <div class="fig"><img src="assets/image-06.jpg" alt="Dixie" data-full="cover_dixieland" loading="lazy"></div>
+ <div class="body">
+  <div class="cnote">Content note &mdash; racism &amp; minstrelsy</div>
+  <h3>Dixie</h3>
+  <div class="sub">Daniel Emmett · 1859 · the song the South claimed</div>
+  <p>This is the hardest song on the page, and it belongs here for exactly that reason. &ldquo;Dixie&rdquo; was written in 1859 by Daniel Emmett for <strong>Bryant&rsquo;s Minstrels</strong> &mdash; a blackface show in New York where white performers in burnt-cork makeup mocked enslaved people for a laugh. Its words imagine an enslaved man <em>longing</em> to return to the plantation. When war came, the white South took it up as an unofficial anthem; it was played at Jefferson Davis&rsquo;s inauguration. And yet the day after Lee surrendered, Lincoln asked a band to strike it up, calling it &ldquo;one of the best tunes I have ever heard.&rdquo; We include it not to celebrate it but because you cannot understand the Confederacy &mdash; or the minstrel-show racism that outlasted slavery &mdash; without hearing what its anthem really was, and where it came from.</p>
+  <div class="player">
+   <button class="pp" type="button" aria-label="Play Dixie" aria-pressed="false"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M8 5.5v13l11-6.5z" fill="currentColor"/></svg></button>
+   <div class="ptrack" role="slider" tabindex="0" aria-label="Seek" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="pbuf"></div><div class="pfill"></div><div class="pknob"></div></div>
+   <div class="ptime"><span class="cur">0:00</span><span class="sep">/</span><span class="dur">0:00</span></div>
+   <audio preload="none" src="assets/audio-06.mp3"></audio>
+  </div>
+  <div class="cred">&ldquo;Dixie&rdquo; &mdash; acoustic recording, 1916, public domain. Cover: &ldquo;I Wish I Was in Dixie&rsquo;s Land,&rdquo; written for Bryant&rsquo;s Minstrels, Firth, Pond &amp; Co., New York, 1860, public domain.</div>
+ </div>
+</article>
+
+ <div class="seclbl">The Music of the Camp</div>
+ <article class="card" id="t6">
+ <div class="fig"><img src="assets/image-07.jpg" alt="Field Music &mdash; Fifes and Drums" data-full="drummer_tin1" loading="lazy"></div>
+ <div class="body">
+  
+  <h3>Field Music &mdash; Fifes and Drums</h3>
+  <div class="sub">the army&rsquo;s clock and command system</div>
+  <p>Field music wasn&rsquo;t entertainment. Fifes and drums were how an army <em>ran</em>: drumbeats woke the men, marched them, called them to meals, and signaled maneuvers over the roar of battle when no voice could carry. Many of the drummer boys who kept that beat were younger than you are now. This field music is associated with the 111th New York Infantry.</p>
+  <div class="player">
+   <button class="pp" type="button" aria-label="Play Field Music &mdash; Fifes and Drums" aria-pressed="false"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M8 5.5v13l11-6.5z" fill="currentColor"/></svg></button>
+   <div class="ptrack" role="slider" tabindex="0" aria-label="Seek" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="pbuf"></div><div class="pfill"></div><div class="pknob"></div></div>
+   <div class="ptime"><span class="cur">0:00</span><span class="sep">/</span><span class="dur">0:00</span></div>
+   <audio preload="none" src="assets/audio-07.mp3"></audio>
+  </div>
+  <div class="cred">Field music of the 111th New York &mdash; recording, public domain. Photograph: Union drummer boy, tintype, c.&nbsp;1861&ndash;65, public domain.</div>
+ </div>
+</article>
+<article class="card" id="t7">
+ <div class="fig"><img src="assets/image-08.jpg" alt="&ldquo;Old 1812&rdquo; &mdash; a Marching Tune" data-full="drummer_bass" loading="lazy"></div>
+ <div class="body">
+  
+  <h3>&ldquo;Old 1812&rdquo; &mdash; a Marching Tune</h3>
+  <div class="sub">fife-and-drum, kept alive by ear</div>
+  <p>Some of the tunes soldiers marched to in the 1860s were already old &mdash; passed down from the Revolution and the War of 1812 by fifers who learned them by ear, not from a page. That is how folk music works: a melody outlives the war it was written for and marches into the next one. Set the cadence and try to fall into step &mdash; this is the beat that moved tens of thousands of men down a road at once.</p>
+  <div class="player">
+   <button class="pp" type="button" aria-label="Play &ldquo;Old 1812&rdquo; &mdash; a Marching Tune" aria-pressed="false"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M8 5.5v13l11-6.5z" fill="currentColor"/></svg></button>
+   <div class="ptrack" role="slider" tabindex="0" aria-label="Seek" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="pbuf"></div><div class="pfill"></div><div class="pknob"></div></div>
+   <div class="ptime"><span class="cur">0:00</span><span class="sep">/</span><span class="dur">0:00</span></div>
+   <audio preload="none" src="assets/audio-08.mp3"></audio>
+  </div>
+  <div class="cred">&ldquo;Old 1812&rdquo; &mdash; fife-and-drum march, recording (provenance being confirmed). Photograph: Union bass drummer, ambrotype, c.&nbsp;1861&ndash;65, public domain.</div>
+ </div>
+</article>
+
+ <div class="seclbl">From the Songbooks &amp; the Field</div>
+ <div class="gal"><figure class="gi"><img src="assets/image-09.jpg" data-full="cover_johnnyhome" alt="" loading="lazy"><figcaption>&ldquo;When Johnny Comes Marching Home&rdquo; &mdash; Louis Lambert (Patrick Gilmore), Boston, 1863. Public domain.</figcaption></figure><figure class="gi"><img src="assets/image-10.jpg" data-full="notation_johnbrown" alt="" loading="lazy"><figcaption>&ldquo;John Brown&rdquo; &mdash; sheet music and verses, C.&nbsp;S. Hall, Charlestown, Mass., 1861. Public domain.</figcaption></figure><figure class="gi"><img src="assets/image-11.jpg" data-full="cover_dixie2" alt="" loading="lazy"><figcaption>&ldquo;Dixie&rsquo;s Land&rdquo; &mdash; sheet music cover. Public domain.</figcaption></figure><figure class="gi"><img src="assets/image-12.jpg" data-full="playbill_bryant" alt="" loading="lazy"><figcaption>Bryant&rsquo;s Minstrels playbill, 1859 &mdash; the blackface troupe that introduced &ldquo;Dixie.&rdquo; Public domain.</figcaption></figure><figure class="gi"><img src="assets/image-13.jpg" data-full="cover_warsongdixie" alt="" loading="lazy"><figcaption>&ldquo;The War Song of Dixie&rdquo; &mdash; Albert Pike&rsquo;s Confederate rewrite. Public domain.</figcaption></figure><figure class="gi"><img src="assets/image-14.jpg" data-full="notation_dixie" alt="" loading="lazy"><figcaption>&ldquo;Dixie&rdquo; &mdash; musical notation. Public domain.</figcaption></figure><figure class="gi"><img src="assets/image-15.jpg" data-full="cover_irishbrigade" alt="" loading="lazy"><figcaption>&ldquo;Irish Brigade Quadrilles&rdquo; &mdash; dedicated to Col. Michael Corcoran and the 69th New York, 1861. Public domain.</figcaption></figure><figure class="gi"><img src="assets/image-16.jpg" data-full="drummer_tin2" alt="" loading="lazy"><figcaption>Union drummer &mdash; tintype in a period case, c.&nbsp;1861&ndash;65. Public domain.</figcaption></figure></div>
+
+ <a class="cta" href="interrogate-the-anthem.html">For students &mdash; Interrogate the Anthem: read these songs like a historian &rarr;</a>
+
+ <div class="foot">
+  <b>ShadowDog Digital Studios</b><br>
+  Promise &amp; Practice · An anti-textbook<br>
+  All songs are public domain; recordings are historical (pre-1925) or U.S.-government performances. Self-contained &middot; offline-ready.
+ </div>
+</div>
+
+<div id="lb"><span class="x">&times;</span><img id="lbimg" src="" alt=""></div>
+<script>
+var FULL={"drummer_tin1": "assets/image-07.jpg", "cover_warsongdixie": "assets/image-17.jpg", "drummer_tin2": "assets/image-18.jpg", "notation_dixie": "assets/image-19.jpg", "cover_dixieland": "assets/image-06.jpg", "notation_johnbrown": "assets/image-20.jpg", "cover_dixie2": "assets/image-06.jpg", "cover_johnbrown": "assets/image-02.jpg", "cover_battlecry": "assets/image-01.jpg", "drummerboys_paint": "assets/image-03.jpg", "band_brass": "assets/image-05.jpg", "cover_beadle": "assets/image-04.jpg", "playbill_bryant": "assets/image-21.jpg", "drummer_bass": "assets/image-08.jpg", "cover_irishbrigade": "assets/image-22.jpg", "cover_johnnyhome": "assets/image-23.jpg"};
+var lb=document.getElementById('lb'),lbi=document.getElementById('lbimg');
+function open(s){if(!FULL[s])return;lbi.src=FULL[s];lb.classList.add('on');}
+function close(){lb.classList.remove('on');lbi.src='';}
+document.addEventListener('click',function(e){
+ var t=e.target;
+ if(t&&t.dataset&&t.dataset.full){open(t.dataset.full);}
+});
+lb.addEventListener('click',close);
+document.addEventListener('keydown',function(e){if(e.key==='Escape')close();});
+// ---- custom players ----
+var PLAY='<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M8 5.5v13l11-6.5z" fill="currentColor"/></svg>', PAUSE='<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><rect x="7" y="5" width="3.6" height="14" rx="1" fill="currentColor"/><rect x="13.4" y="5" width="3.6" height="14" rx="1" fill="currentColor"/></svg>';
+var players=[].slice.call(document.querySelectorAll('.player'));
+function fmt(s){if(!isFinite(s)||s<0)s=0;s=Math.floor(s);var m=Math.floor(s/60),x=s%60;return m+':'+(x<10?'0':'')+x;}
+players.forEach(function(P){
+ var a=P.querySelector('audio'),btn=P.querySelector('.pp'),track=P.querySelector('.ptrack'),
+     fill=P.querySelector('.pfill'),buf=P.querySelector('.pbuf'),knob=P.querySelector('.pknob'),
+     cur=P.querySelector('.cur'),dur=P.querySelector('.dur');
+ var ready=false, dragging=false;
+ function setPct(p){p=Math.max(0,Math.min(1,p));fill.style.width=(p*100)+'%';knob.style.left=(p*100)+'%';track.setAttribute('aria-valuenow',Math.round(p*100));}
+ function paint(){if(!dragging&&a.duration){setPct(a.currentTime/a.duration);cur.textContent=fmt(a.currentTime);}}
+ a.addEventListener('loadedmetadata',function(){dur.textContent=fmt(a.duration);ready=true;btn.classList.remove('loading');});
+ a.addEventListener('timeupdate',paint);
+ a.addEventListener('progress',function(){try{if(a.buffered.length&&a.duration){buf.style.width=(a.buffered.end(a.buffered.length-1)/a.duration*100)+'%';}}catch(e){}});
+ a.addEventListener('play',function(){players.forEach(function(Q){if(Q!==P){var b=Q.querySelector('audio');if(!b.paused)b.pause();}});
+   P.classList.add('playing');btn.innerHTML=PAUSE;btn.querySelector('svg').classList.add('pause-ic');btn.setAttribute('aria-pressed','true');btn.setAttribute('aria-label','Pause');});
+ function toStop(){P.classList.remove('playing');btn.innerHTML=PLAY;btn.setAttribute('aria-pressed','false');btn.setAttribute('aria-label','Play');}
+ a.addEventListener('pause',toStop);
+ a.addEventListener('ended',function(){toStop();setPct(0);cur.textContent='0:00';});
+ btn.addEventListener('click',function(){if(a.paused){if(!ready)btn.classList.add('loading');a.play();}else{a.pause();}});
+ function seekFromEvent(e){var r=track.getBoundingClientRect();var x=(e.touches?e.touches[0].clientX:e.clientX)-r.left;var p=r.width?x/r.width:0;p=Math.max(0,Math.min(1,p));setPct(p);cur.textContent=fmt(p*(a.duration||0));return p;}
+ function commit(p){if(a.duration){a.currentTime=p*a.duration;}}
+ track.addEventListener('pointerdown',function(e){dragging=true;track.setPointerCapture&&track.setPointerCapture(e.pointerId);var p=seekFromEvent(e);e.preventDefault();
+   var mv=function(ev){if(dragging)seekFromEvent(ev);};
+   var up=function(ev){if(!dragging)return;dragging=false;commit(seekFromEvent(ev));document.removeEventListener('pointermove',mv);document.removeEventListener('pointerup',up);};
+   document.addEventListener('pointermove',mv);document.addEventListener('pointerup',up);});
+ track.addEventListener('keydown',function(e){if(!a.duration)return;var step=5;
+   if(e.key==='ArrowRight'){a.currentTime=Math.min(a.duration,a.currentTime+step);e.preventDefault();}
+   else if(e.key==='ArrowLeft'){a.currentTime=Math.max(0,a.currentTime-step);e.preventDefault();}
+   else if(e.key===' '||e.key==='Enter'){btn.click();e.preventDefault();}});
+});
+</script>
+</body></html>

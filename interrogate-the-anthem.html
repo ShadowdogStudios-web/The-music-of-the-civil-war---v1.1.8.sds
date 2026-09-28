@@ -1,0 +1,268 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Interrogate the Anthem &mdash; Promise &amp; Practice</title>
+<style>
+:root{--rust:#b1442f;--ink:#1a1a1a;--body:#33302b;--mut:#7a7166;--hair:#e3ddd4;--page:#fbf8f2;--card:#fff;--soft:#f4efe6}
+*{box-sizing:border-box}html,body{margin:0}
+body{background:var(--page);color:var(--body);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased;line-height:1.6}
+.wrap{max-width:800px;margin:0 auto;padding:0 22px}
+a{color:var(--rust)}
+/* header */
+.head{padding:44px 0 10px;text-align:center}
+.kick{font-size:12px;letter-spacing:.32em;text-transform:uppercase;color:var(--rust);font-weight:700}
+.hrule{width:48px;height:3px;background:var(--rust);margin:16px auto 18px}
+h1{font-family:Georgia,'Times New Roman',serif;font-weight:400;font-size:clamp(34px,6vw,52px);line-height:1.04;color:var(--ink);margin:0}
+.sub{font-family:Georgia,serif;font-style:italic;color:var(--rust);font-size:clamp(16px,2.4vw,21px);margin-top:10px}
+/* name row */
+.idrow{display:flex;gap:14px;flex-wrap:wrap;margin:22px 0 4px;padding:16px;background:var(--soft);border-radius:12px}
+.idrow label{flex:1;min-width:150px;font-size:12px;letter-spacing:.04em;text-transform:uppercase;font-weight:700;color:var(--mut)}
+.idrow input{display:block;width:100%;margin-top:6px;padding:9px 11px;border:1px solid var(--hair);border-radius:8px;font-size:15px;background:#fff;color:var(--ink);font-family:inherit}
+/* toolkit strip */
+.kit{margin:18px 0 8px}
+.kit .klbl{font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--rust);font-weight:700;margin-bottom:10px}
+.chips{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px}
+.chip{border:1px solid var(--hair);border-radius:10px;padding:10px 12px;background:#fff;font-size:12.5px}
+.chip b{display:block;color:var(--ink);font-size:13px;margin-bottom:2px}
+/* autosave bar */
+.bar{position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:14px 0 6px;padding:10px 14px;background:rgba(251,248,242,.94);backdrop-filter:blur(6px);border:1px solid var(--hair);border-radius:12px}
+.bar .status{font-size:13px;color:var(--mut);margin-right:auto}
+.bar .status b{color:var(--rust)}
+.bbtn{font-size:13px;font-weight:700;padding:8px 14px;border-radius:20px;border:1px solid var(--rust);background:#fff;color:var(--rust);cursor:pointer;font-family:inherit}
+.bbtn.solid{background:var(--rust);color:#fff}
+.ctaback{display:inline-block;margin:24px 0 0;font-size:14px;font-weight:700;text-decoration:none;color:var(--rust)}
+.bbtn:hover{filter:brightness(.96)}
+/* tasks */
+.task{display:flex;gap:16px;background:var(--card);border:1px solid var(--hair);border-radius:14px;padding:22px;margin:16px 0;box-shadow:0 6px 22px rgba(0,0,0,.04)}
+.task.exit{background:var(--soft);box-shadow:none}
+.tnum{flex:0 0 40px;height:40px;border-radius:50%;background:var(--rust);color:#fff;font-family:Georgia,serif;font-size:20px;display:flex;align-items:center;justify-content:center}
+.tbody{flex:1;min-width:0}
+.move{display:inline-block;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;font-weight:700;color:var(--rust);border:1px solid rgba(177,68,47,.35);border-radius:20px;padding:3px 10px;margin-bottom:8px}
+.task h2{font-family:Georgia,serif;font-weight:400;font-size:25px;color:var(--ink);margin:0 0 8px}
+.lead{margin:0 0 14px;font-size:15.5px}
+.prompt{background:#fff;border-left:4px solid var(--rust);border-radius:0 8px 8px 0;padding:12px 16px;font-size:16px;margin:0 0 14px}
+blockquote{font-family:Georgia,serif;font-style:italic;font-size:17px;color:var(--ink);border-left:3px solid var(--hair);margin:0 0 14px;padding:6px 0 6px 16px}
+blockquote.mini{font-size:14px;margin-top:8px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:6px}
+.q{display:block;margin:14px 0}
+.qlab{display:block;font-size:14.5px;font-weight:600;color:var(--ink);margin-bottom:6px}
+textarea{width:100%;padding:11px 13px;border:1px solid var(--hair);border-radius:10px;font-family:inherit;font-size:15px;line-height:1.55;color:var(--ink);background:#fffdf9;resize:vertical}
+textarea:focus{outline:none;border-color:var(--rust);box-shadow:0 0 0 3px rgba(177,68,47,.12)}
+/* source figure */
+.src{margin:0 0 14px;text-align:center}
+.src img{max-width:260px;max-height:340px;border-radius:8px;box-shadow:0 5px 18px rgba(0,0,0,.2);cursor:zoom-in}
+.src figcaption{font-size:11.5px;color:var(--mut);margin-top:8px;line-height:1.5}
+/* player */
+.player{display:flex;align-items:center;gap:11px;flex-wrap:wrap;background:var(--soft);border-radius:10px;padding:10px 12px;margin:0 0 12px}
+.pp{flex:0 0 auto;width:40px;height:40px;border-radius:50%;border:none;background:var(--rust);color:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 3px 8px rgba(177,68,47,.32)}
+.pp:hover{background:#9a3728}.pp:active{transform:scale(.94)}
+.ptrack{position:relative;flex:1;min-width:90px;height:7px;border-radius:6px;background:var(--hair);cursor:pointer;touch-action:none}
+.pfill{position:absolute;left:0;top:0;height:100%;width:0;border-radius:6px;background:var(--rust)}
+.pknob{position:absolute;top:50%;left:0;width:14px;height:14px;border-radius:50%;background:#fff;border:2px solid var(--rust);transform:translate(-50%,-50%);box-shadow:0 1px 3px rgba(0,0,0,.25);opacity:0}
+.ptrack:hover .pknob,.player.playing .pknob{opacity:1}
+.ptime{font-variant-numeric:tabular-nums;font-size:12px;color:var(--mut)}.ptime .sep{margin:0 3px;opacity:.6}
+.plabel{flex-basis:100%;font-size:11.5px;color:var(--mut);font-weight:700;letter-spacing:.02em}
+/* lightbox */
+#lb{position:fixed;inset:0;background:rgba(20,17,15,.93);display:none;align-items:center;justify-content:center;z-index:60;padding:26px;cursor:zoom-out}
+#lb.on{display:flex}#lb img{max-width:92vw;max-height:88vh;border-radius:6px}
+.foot{margin:34px 0 60px;padding-top:18px;border-top:1px solid var(--hair);font-size:11.5px;color:var(--mut);line-height:1.6;text-align:center}
+.foot b{color:var(--rust);letter-spacing:.06em;text-transform:uppercase;font-size:11px}
+@media(max-width:640px){.two{grid-template-columns:1fr} .task{padding:18px;gap:12px}}
+@media print{
+ .bar,.kit,#lb{display:none!important}
+ body{background:#fff}.task,.idrow{box-shadow:none;break-inside:avoid}
+ textarea{border:1px solid #bbb;background:#fff}
+}
+</style></head><body>
+<div class="wrap">
+ <div class="head">
+  <div class="kick">Promise &amp; Practice · Disciplinary Literacy</div>
+  <div class="hrule"></div>
+  <h1>Interrogate the Anthem</h1>
+  <div class="sub">Reading Civil War songs like a historian</div>
+ </div>
+
+ <div class="idrow">
+  <label>Name<input data-q="_name" data-label="Name" type="text" autocomplete="off"></label>
+  <label>Class period<input data-q="_period" data-label="Class period" type="text" autocomplete="off"></label>
+  <label>Date<input data-q="_date" data-label="Date" type="text" autocomplete="off"></label>
+ </div>
+
+ <div class="kit">
+  <div class="klbl">The historian&rsquo;s moves you&rsquo;ll use</div>
+  <div class="chips">
+   <div class="chip"><b>Sourcing</b>Who made it, when, and why?</div>
+   <div class="chip"><b>Close reading</b>What do the exact words and sounds reveal?</div>
+   <div class="chip"><b>Corroboration</b>What happens when sources meet?</div>
+   <div class="chip"><b>Point of view</b>Whose perspective is this?</div>
+   <div class="chip"><b>Argument</b>Claim, evidence, reasoning.</div>
+  </div>
+ </div>
+
+ <div class="bar">
+  <div class="status">Your work saves in this browser automatically. <b><span id="ansN">0</span>/12</b> answered.</div>
+  <button class="bbtn solid" id="dl">Download my work</button>
+  <button class="bbtn" id="rs">Restore</button>
+  <button class="bbtn" id="pr">Print / PDF</button>
+  <input id="file" type="file" accept=".txt,.json" style="display:none">
+ </div>
+
+ <section class="task">
+ <div class="tnum">1</div>
+ <div class="tbody">
+  <div class="move">Sourcing</div>
+  <h2>Source it &mdash; before you hear a note</h2>
+  <p class="lead">A historian reads the <em>outside</em> of a document first: who made it, where, when, and for whom. Sheet music prints all of that right on the cover. Read this one like evidence, not decoration.</p>
+  <figure class="src"><img src="assets/image-06.jpg" data-full="cover_dixieland" alt=""><figcaption>&ldquo;I Wish I Was in Dixie&rsquo;s Land&rdquo; &mdash; sheet music cover, written for Bryant&rsquo;s Minstrels, Firth, Pond &amp; Co., New York, 1860. Public domain (Library of Congress).</figcaption></figure>
+  <label class="q"><span class="qlab">a. Who published this song, in what city, and in what year? Copy the exact words from the cover.</span><textarea data-q="s1" data-label="a. Who published this song, in what city, and in what year? Copy the exact words from the cover." rows="3" placeholder="Publisher, city, year — straight off the page."></textarea></label>
+  <label class="q"><span class="qlab">b. The cover says the song was &ldquo;written for&rdquo; a specific group. Who? (A minstrel show was a stage act in which white performers in blackface makeup imitated and mocked enslaved Black people.)</span><textarea data-q="s2" data-label="b. The cover says the song was &ldquo;written for&rdquo; a specific group. Who? (A minstrel show was a stage act in which white performers in blackface makeup imitated and mocked enslaved Black people.)" rows="3" placeholder=""></textarea></label>
+  <label class="q"><span class="qlab">c. Sourcing question: knowing who made this song and for what kind of show &mdash; before you have heard a single note &mdash; what should you already be on guard about?</span><textarea data-q="s3" data-label="c. Sourcing question: knowing who made this song and for what kind of show &mdash; before you have heard a single note &mdash; what should you already be on guard about?" rows="3" placeholder="What does the origin warn you to watch for?"></textarea></label>
+ </div>
+</section><section class="task">
+ <div class="tnum">2</div>
+ <div class="tbody">
+  <div class="move">Close reading &amp; listening</div>
+  <h2>Listen close</h2>
+  <p class="lead">Now the inside. Play the excerpt and read the chorus. A historian asks not just &ldquo;what does it say&rdquo; but &ldquo;what is it trying to make me feel, and believe?&rdquo;</p>
+  <div class="player" data-clip="dixie">
+ <button class="pp" type="button" aria-label="Play &ldquo;Dixie,&rdquo; recorded 1916" aria-pressed="false"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M8 5.5v13l11-6.5z" fill="currentColor"/></svg></button>
+ <div class="ptrack" role="slider" tabindex="0" aria-label="Seek" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="pfill"></div><div class="pknob"></div></div>
+ <div class="ptime"><span class="cur">0:00</span><span class="sep">/</span><span class="dur">0:00</span></div>
+ <div class="plabel">&ldquo;Dixie,&rdquo; recorded 1916</div>
+ <audio preload="none" src="assets/audio-09.mp3"></audio>
+</div>
+  <blockquote>&ldquo;I wish I was in the land of cotton, / Old times there are not forgotten; / Look away! Look away! Look away! Dixie Land.&rdquo;</blockquote>
+  <label class="q"><span class="qlab">a. The song is sung in the voice of an enslaved person. What does that voice claim to want? Why would a white minstrel audience in 1860 <em>want</em> to hear an enslaved person say that?</span><textarea data-q="c1" data-label="a. The song is sung in the voice of an enslaved person. What does that voice claim to want? Why would a white minstrel audience in 1860 <em>want</em> to hear an enslaved person say that?" rows="3" placeholder=""></textarea></label>
+  <label class="q"><span class="qlab">b. Read for the silence: name one thing about the real experience of slavery that this cheerful song leaves completely out.</span><textarea data-q="c2" data-label="b. Read for the silence: name one thing about the real experience of slavery that this cheerful song leaves completely out." rows="3" placeholder=""></textarea></label>
+ </div>
+</section><section class="task">
+ <div class="tnum">3</div>
+ <div class="tbody">
+  <div class="move">Corroboration + contextualization</div>
+  <h2>Same tune, two songs</h2>
+  <p class="lead">Historians corroborate &mdash; they line sources up against each other. Here are two you can compare by ear. They share the <em>exact same melody</em>. Play both.</p>
+  <div class="two">
+   <div><div class="player" data-clip="johnbrown">
+ <button class="pp" type="button" aria-label="Play &ldquo;John Brown&rsquo;s Body,&rdquo; rec. 1902" aria-pressed="false"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M8 5.5v13l11-6.5z" fill="currentColor"/></svg></button>
+ <div class="ptrack" role="slider" tabindex="0" aria-label="Seek" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="pfill"></div><div class="pknob"></div></div>
+ <div class="ptime"><span class="cur">0:00</span><span class="sep">/</span><span class="dur">0:00</span></div>
+ <div class="plabel">&ldquo;John Brown&rsquo;s Body,&rdquo; rec. 1902</div>
+ <audio preload="none" src="assets/audio-10.mp3"></audio>
+</div><blockquote class="mini">&ldquo;John Brown&rsquo;s body lies a-mould&rsquo;ring in the grave &hellip; his soul is marching on. Glory, glory, hallelujah!&rdquo;</blockquote></div>
+   <div><div class="player" data-clip="battle_hymn">
+ <button class="pp" type="button" aria-label="Play &ldquo;Battle Hymn,&rdquo; rec. c.1908" aria-pressed="false"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M8 5.5v13l11-6.5z" fill="currentColor"/></svg></button>
+ <div class="ptrack" role="slider" tabindex="0" aria-label="Seek" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="pfill"></div><div class="pknob"></div></div>
+ <div class="ptime"><span class="cur">0:00</span><span class="sep">/</span><span class="dur">0:00</span></div>
+ <div class="plabel">&ldquo;Battle Hymn,&rdquo; rec. c.1908</div>
+ <audio preload="none" src="assets/audio-11.mp3"></audio>
+</div><blockquote class="mini">&ldquo;Mine eyes have seen the glory of the coming of the Lord; / He is trampling out the vintage where the grapes of wrath are stored.&rdquo;</blockquote></div>
+  </div>
+  <label class="q"><span class="qlab">a. Same melody, different words. In one sentence each, what is &ldquo;John Brown&rsquo;s Body&rdquo; about, and what is the &ldquo;Battle Hymn&rdquo; about?</span><textarea data-q="r1" data-label="a. Same melody, different words. In one sentence each, what is &ldquo;John Brown&rsquo;s Body&rdquo; about, and what is the &ldquo;Battle Hymn&rdquo; about?" rows="3" placeholder=""></textarea></label>
+  <label class="q"><span class="qlab">b. Context: Julia Ward Howe wrote the &ldquo;Battle Hymn&rdquo; in 1862 to replace the older words. Why might the Union have wanted to trade a song about a hanged man for a song about God&rsquo;s judgment? What changed between the two?</span><textarea data-q="r2" data-label="b. Context: Julia Ward Howe wrote the &ldquo;Battle Hymn&rdquo; in 1862 to replace the older words. Why might the Union have wanted to trade a song about a hanged man for a song about God&rsquo;s judgment? What changed between the two?" rows="3" placeholder=""></textarea></label>
+ </div>
+</section><section class="task">
+ <div class="tnum">4</div>
+ <div class="tbody">
+  <div class="move">Point of view</div>
+  <h2>Whose song is it?</h2>
+  <p class="lead">&ldquo;The Battle Cry of Freedom&rdquo; was the North&rsquo;s great rallying song &mdash; and the Confederacy liked the tune so much it wrote its own Southern words to the very same melody.</p>
+  <div class="player" data-clip="battle_cry">
+ <button class="pp" type="button" aria-label="Play &ldquo;The Battle Cry of Freedom,&rdquo; Union version" aria-pressed="false"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M8 5.5v13l11-6.5z" fill="currentColor"/></svg></button>
+ <div class="ptrack" role="slider" tabindex="0" aria-label="Seek" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="pfill"></div><div class="pknob"></div></div>
+ <div class="ptime"><span class="cur">0:00</span><span class="sep">/</span><span class="dur">0:00</span></div>
+ <div class="plabel">&ldquo;The Battle Cry of Freedom,&rdquo; Union version</div>
+ <audio preload="none" src="assets/audio-12.mp3"></audio>
+</div>
+  <blockquote>&ldquo;The Union forever! Hurrah, boys, hurrah! / Down with the traitor, up with the star!&rdquo;</blockquote>
+  <label class="q"><span class="qlab">Both armies sang this melody, each sure it was theirs. What does it tell you about songs as historical evidence that the <em>same tune</em> could carry two opposite causes? Can a melody &ldquo;belong&rdquo; to a side?</span><textarea data-q="p1" data-label="Both armies sang this melody, each sure it was theirs. What does it tell you about songs as historical evidence that the <em>same tune</em> could carry two opposite causes? Can a melody &ldquo;belong&rdquo; to a side?" rows="3" placeholder=""></textarea></label>
+ </div>
+</section><section class="task">
+ <div class="tnum">5</div>
+ <div class="tbody">
+  <div class="move">Evidence-based argument</div>
+  <h2>Make the call</h2>
+  <p class="lead">Time to argue like a historian: a claim, the evidence for it, and your reasoning. Here is the real question our class faced in building this unit:</p>
+  <p class="prompt">&ldquo;Dixie&rdquo; began as a blackface minstrel song and became the Confederate anthem. <strong>Should a U.S. history class study it &mdash; play it, even &mdash; or leave it out? Make your case.</strong></p>
+  <label class="q"><span class="qlab">CLAIM &mdash; State your position in one clear sentence.</span><textarea data-q="a1" data-label="CLAIM &mdash; State your position in one clear sentence." rows="3" placeholder="Our class should / should not …"></textarea></label>
+  <label class="q"><span class="qlab">EVIDENCE &mdash; Cite at least two specific things you sourced or heard today that support your claim.</span><textarea data-q="a2" data-label="EVIDENCE &mdash; Cite at least two specific things you sourced or heard today that support your claim." rows="4" placeholder="Point to the cover, the lyrics, the tune-sharing, the minstrel origin…"></textarea></label>
+  <label class="q"><span class="qlab">REASONING &mdash; Explain <em>why</em> that evidence supports your claim. What is gained, and what is risked, either way?</span><textarea data-q="a3" data-label="REASONING &mdash; Explain <em>why</em> that evidence supports your claim. What is gained, and what is risked, either way?" rows="4" placeholder=""></textarea></label>
+ </div>
+</section><section class="task exit">
+ <div class="tnum">&#10022;</div>
+ <div class="tbody">
+  <h2>Exit ticket</h2>
+  <label class="q"><span class="qlab">In one sentence: what does treating a song as a historical source let you see that just reading the lyrics never would?</span><textarea data-q="x1" data-label="In one sentence: what does treating a song as a historical source let you see that just reading the lyrics never would?" rows="3" placeholder=""></textarea></label>
+ </div>
+</section>
+
+ <a class="ctaback" href="index.html">&larr; Back to The Music of the War</a>
+
+ <div class="foot">
+  <b>ShadowDog Digital Studios</b> &middot; Promise &amp; Practice &middot; An anti-textbook<br>
+  Audio: historical recordings (1902&ndash;1916), public domain. Sheet music: Library of Congress, public domain.<br>
+  Works offline &middot; no account needed &middot; your answers never leave this device unless you download them.
+ </div>
+</div>
+
+<div id="lb"><img id="lbimg" src="" alt=""></div>
+<script>
+var PLAY='<svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M8 5.5v13l11-6.5z" fill="currentColor"/></svg>', PAUSE='<svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><rect x="7" y="5" width="3.6" height="14" rx="1" fill="currentColor"/><rect x="13.4" y="5" width="3.6" height="14" rx="1" fill="currentColor"/></svg>';
+/* ---- players ---- */
+var players=[].slice.call(document.querySelectorAll('.player'));
+function fmt(s){if(!isFinite(s)||s<0)s=0;s=Math.floor(s);var m=Math.floor(s/60),x=s%60;return m+':'+(x<10?'0':'')+x;}
+players.forEach(function(P){
+ var a=P.querySelector('audio'),btn=P.querySelector('.pp'),track=P.querySelector('.ptrack'),
+     fill=P.querySelector('.pfill'),knob=P.querySelector('.pknob'),cur=P.querySelector('.cur'),dur=P.querySelector('.dur');
+ var drag=false;
+ function setp(p){p=Math.max(0,Math.min(1,p));fill.style.width=(p*100)+'%';knob.style.left=(p*100)+'%';track.setAttribute('aria-valuenow',Math.round(p*100));}
+ a.addEventListener('loadedmetadata',function(){dur.textContent=fmt(a.duration);});
+ a.addEventListener('timeupdate',function(){if(!drag&&a.duration){setp(a.currentTime/a.duration);cur.textContent=fmt(a.currentTime);}});
+ a.addEventListener('play',function(){players.forEach(function(Q){if(Q!==P){var b=Q.querySelector('audio');if(!b.paused)b.pause();}});P.classList.add('playing');btn.innerHTML=PAUSE;btn.setAttribute('aria-label','Pause');});
+ function stop(){P.classList.remove('playing');btn.innerHTML=PLAY;btn.setAttribute('aria-label','Play');}
+ a.addEventListener('pause',stop);a.addEventListener('ended',function(){stop();setp(0);cur.textContent='0:00';});
+ btn.addEventListener('click',function(){if(a.paused)a.play();else a.pause();});
+ function ev(e){var r=track.getBoundingClientRect();var x=(e.touches?e.touches[0].clientX:e.clientX)-r.left;var p=r.width?x/r.width:0;setp(p);cur.textContent=fmt(p*(a.duration||0));return Math.max(0,Math.min(1,p));}
+ track.addEventListener('pointerdown',function(e){drag=true;var p=ev(e);e.preventDefault();
+  var mv=function(x){if(drag)ev(x);},up=function(x){if(!drag)return;drag=false;if(a.duration)a.currentTime=ev(x)*a.duration;document.removeEventListener('pointermove',mv);document.removeEventListener('pointerup',up);};
+  document.addEventListener('pointermove',mv);document.addEventListener('pointerup',up);});
+ track.addEventListener('keydown',function(e){if(!a.duration)return;if(e.key==='ArrowRight'){a.currentTime=Math.min(a.duration,a.currentTime+5);e.preventDefault();}else if(e.key==='ArrowLeft'){a.currentTime=Math.max(0,a.currentTime-5);e.preventDefault();}else if(e.key===' '||e.key==='Enter'){btn.click();e.preventDefault();}});
+});
+/* ---- lightbox ---- */
+var FULL={"cover_dixieland": "assets/image-06.jpg"};var lb=document.getElementById('lb'),lbi=document.getElementById('lbimg');
+document.addEventListener('click',function(e){var t=e.target;if(t&&t.dataset&&t.dataset.full&&FULL[t.dataset.full]){lbi.src=FULL[t.dataset.full];lb.classList.add('on');}});
+lb.addEventListener('click',function(){lb.classList.remove('on');lbi.src='';});
+document.addEventListener('keydown',function(e){if(e.key==='Escape'){lb.classList.remove('on');lbi.src='';}});
+/* ---- autosave + download/restore ---- */
+var KEY='pp_dl_music_v1';
+var fields=[].slice.call(document.querySelectorAll('[data-q]'));
+var ansEl=document.getElementById("ansN");
+function nAnswered(){return fields.filter(function(f){return f.dataset.q.charAt(0)!=='_'&&f.value.trim();}).length;}
+function save(){var o={};fields.forEach(function(f){o[f.dataset.q]=f.value;});try{localStorage.setItem(KEY,JSON.stringify(o));}catch(e){}ansEl.textContent=nAnswered();}
+function load(){try{var o=JSON.parse(localStorage.getItem(KEY)||'{}');fields.forEach(function(f){if(o[f.dataset.q]!=null)f.value=o[f.dataset.q];});}catch(e){}ansEl.textContent=nAnswered();}
+var tmr;fields.forEach(function(f){f.addEventListener('input',function(){clearTimeout(tmr);tmr=setTimeout(save,250);});});
+load();
+function buildTxt(){
+ var name=(document.querySelector('[data-q="_name"]').value||'').trim();
+ var per=(document.querySelector('[data-q="_period"]').value||'').trim();
+ var dt=(document.querySelector('[data-q="_date"]').value||'').trim();
+ var L=['INTERROGATE THE ANTHEM — Promise & Practice','Name: '+name+'   Period: '+per+'   Date: '+dt,''];
+ fields.forEach(function(f){if(f.dataset.q.charAt(0)==='_')return;L.push(f.dataset.label);L.push((f.value||'').trim()||'(blank)');L.push('');});
+ var o={};fields.forEach(function(f){o[f.dataset.q]=f.value;});
+ L.push('');L.push('<!--PPDATA:'+JSON.stringify(o)+'-->');
+ return L.join('\n');
+}
+document.getElementById('dl').addEventListener('click',function(){
+ var name=(document.querySelector('[data-q="_name"]').value||'student').trim().replace(/[^a-z0-9]+/gi,'_')||'student';
+ var b=new Blob([buildTxt()],{type:'text/plain'});var u=URL.createObjectURL(b);
+ var a=document.createElement('a');a.href=u;a.download='InterrogateTheAnthem_'+name+'.txt';a.click();setTimeout(function(){URL.revokeObjectURL(u);},1000);
+});
+document.getElementById('rs').addEventListener('click',function(){document.getElementById('file').click();});
+document.getElementById('file').addEventListener('change',function(e){
+ var f=e.target.files[0];if(!f)return;var rd=new FileReader();
+ rd.onload=function(){var txt=rd.result,o=null;var m=txt.match(/<!--PPDATA:([\s\S]*?)-->/);
+  try{o=m?JSON.parse(m[1]):JSON.parse(txt);}catch(err){alert('Could not read that file. Use a file you downloaded from this page.');return;}
+  fields.forEach(function(fl){if(o[fl.dataset.q]!=null)fl.value=o[fl.dataset.q];});save();};
+ rd.readAsText(f);e.target.value='';
+});
+document.getElementById('pr').addEventListener('click',function(){window.print();});
+</script>
+</body></html>
